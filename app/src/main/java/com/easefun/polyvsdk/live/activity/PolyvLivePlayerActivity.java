@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -118,8 +119,9 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState != null)
+        if (savedInstanceState != null) {
             savedInstanceState.putParcelable("android:support:fragments", null);
+        }
         super.onCreate(savedInstanceState);
         //检测用户是否被踢，用户被踢则不能观看直播及回放，退出应用再进入可恢复
         channelId = getIntent().getStringExtra("channelId");
@@ -483,6 +485,7 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         tabViewPagerFragment.getOnlineListFragment().onActivityResult(requestCode, resultCode, data);
     }
 
