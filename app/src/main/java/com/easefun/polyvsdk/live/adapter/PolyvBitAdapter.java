@@ -1,10 +1,11 @@
 package com.easefun.polyvsdk.live.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.easefun.polyvsdk.live.R;
 import com.easefun.polyvsdk.live.vo.PolyvLiveBitrateVO;

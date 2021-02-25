@@ -3,9 +3,10 @@ package com.easefun.polyvsdk.live.adapter;
 import java.util.List;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
+
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 public class PolyvEmoPagerAdapter extends PagerAdapter {
 	private List<View> lists;

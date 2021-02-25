@@ -3,14 +3,15 @@ package com.easefun.polyvsdk.live.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.easefun.polyvsdk.live.R;
 import com.easefun.polyvsdk.live.fragment.PolyvPlaybackListFragment;
 
-public class PolyvPlaybackListActivity extends FragmentActivity{
+public class PolyvPlaybackListActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
