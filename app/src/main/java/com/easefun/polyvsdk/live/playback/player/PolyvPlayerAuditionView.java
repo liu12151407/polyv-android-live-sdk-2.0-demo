@@ -97,7 +97,9 @@ public class PolyvPlayerAuditionView extends RelativeLayout {
 			
 			@Override
 			public void onClick(View v) {
-				if (mediaPlayer == null) return;
+				if (mediaPlayer == null) {
+					return;
+				}
 				if (mediaPlayer.isPlaying()) {
 					playPauseBtn.setImageResource(R.drawable.polyv_btn_play_s);
 					mediaPlayer.pause();

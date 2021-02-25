@@ -29,8 +29,9 @@ public class PolyvTabFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null)
+        if (view == null) {
             view = inflater.inflate(R.layout.polyv_fragment_tab, container, false);
+        }
         return view;
     }
 
@@ -113,12 +114,14 @@ public class PolyvTabFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onGlobalLayout() {
                 resetLineLength();
-                if (viewPagerFragment.getCurrentIndex() == 0)
+                if (viewPagerFragment.getCurrentIndex() == 0) {
                     resetViewStatus(0);
-                if (Build.VERSION.SDK_INT >= 16)
+                }
+                if (Build.VERSION.SDK_INT >= 16) {
                     getView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                else
+                } else {
                     getView().getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                }
             }
         });
     }

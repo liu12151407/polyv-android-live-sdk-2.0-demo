@@ -15,8 +15,9 @@ public class PolyvFaceManager {
 	private static PolyvFaceManager instance;
 
 	public static PolyvFaceManager getInstance() {
-		if (null == instance)
+		if (null == instance) {
 			instance = new PolyvFaceManager();
+		}
 		return instance;
 	}
 	

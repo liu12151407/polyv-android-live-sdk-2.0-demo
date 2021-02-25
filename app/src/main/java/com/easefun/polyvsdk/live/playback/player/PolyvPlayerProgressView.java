@@ -43,8 +43,9 @@ public class PolyvPlayerProgressView extends FrameLayout {
     }
 
     public void hide() {
-        if (rl_center_progress != null && rl_center_progress.getVisibility() == View.VISIBLE)
+        if (rl_center_progress != null && rl_center_progress.getVisibility() == View.VISIBLE) {
             rl_center_progress.setVisibility(View.GONE);
+        }
     }
 
     public void resetMaxValue() {
@@ -56,10 +57,11 @@ public class PolyvPlayerProgressView extends FrameLayout {
     }
 
     public void setViewProgressValue(int fastForwardPos, int totaltime, boolean end, boolean isRightSwipe) {
-        if (end)
+        if (end) {
             rl_center_progress.setVisibility(View.GONE);
-        else
+        } else {
             rl_center_progress.setVisibility(View.VISIBLE);
+        }
         if (isRightSwipe) {
             iv_left.setVisibility(View.GONE);
             iv_right.setVisibility(View.VISIBLE);
@@ -67,10 +69,12 @@ public class PolyvPlayerProgressView extends FrameLayout {
             iv_left.setVisibility(View.VISIBLE);
             iv_right.setVisibility(View.GONE);
         }
-        if (fastForwardPos < 0)
+        if (fastForwardPos < 0) {
             fastForwardPos = 0;
-        if (fastForwardPos > totaltime)
+        }
+        if (fastForwardPos > totaltime) {
             fastForwardPos = totaltime;
+        }
         tv_curtime.setText(PolyvTimeUtils.generateTime(fastForwardPos));
     }
 }

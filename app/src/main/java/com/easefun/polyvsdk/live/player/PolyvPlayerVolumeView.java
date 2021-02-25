@@ -40,8 +40,9 @@ public class PolyvPlayerVolumeView extends FrameLayout {
     }
 
     public void hide() {
-        if (rl_center_volume != null && rl_center_volume.getVisibility() == View.VISIBLE)
+        if (rl_center_volume != null && rl_center_volume.getVisibility() == View.VISIBLE) {
             rl_center_volume.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -50,10 +51,11 @@ public class PolyvPlayerVolumeView extends FrameLayout {
      * @param end {@link PolyvLiveVideoViewListener.OnGestureRightDownListener}的回调方法参数
      */
     public void setViewVolumeValue(int volume, boolean end) {
-        if (end)
+        if (end) {
             rl_center_volume.setVisibility(View.GONE);
-        else
+        } else {
             rl_center_volume.setVisibility(View.VISIBLE);
+        }
         tv_volume.setText(volume + "%");
     }
 }

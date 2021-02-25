@@ -80,17 +80,19 @@ public class PolyvTabViewPagerFragment extends Fragment {
     }
 
     public void setVideoVolume(int volume) {
-        if (videoView instanceof PolyvLiveVideoView)
+        if (videoView instanceof PolyvLiveVideoView) {
             ((PolyvLiveVideoView) videoView).setVolume(volume);
-        else if (videoView instanceof PolyvVideoView)
+        } else if (videoView instanceof PolyvVideoView) {
             ((PolyvVideoView) videoView).setVolume(volume);
+        }
     }
 
     public int getVideoVolume() {
-        if (videoView instanceof PolyvLiveVideoView)
+        if (videoView instanceof PolyvLiveVideoView) {
             return ((PolyvLiveVideoView) videoView).getVolume();
-        else if (videoView instanceof PolyvVideoView)
+        } else if (videoView instanceof PolyvVideoView) {
             return ((PolyvVideoView) videoView).getVolume();
+        }
         return 0;
     }
 
@@ -101,8 +103,9 @@ public class PolyvTabViewPagerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null)
+        if (view == null) {
             view = inflater.inflate(R.layout.polyv_fragment_tab_viewpager, container, false);
+        }
         return view;
     }
 
@@ -170,10 +173,11 @@ public class PolyvTabViewPagerFragment extends Fragment {
         questionFragment = new PolyvQuestionFragment();
         fragmentLists = new ArrayList<>();
         fragmentLists.add(chatFragment);
-        if (isLive())
+        if (isLive()) {
             fragmentLists.add(onlineListFragment);
-        else
+        } else {
             fragmentLists.add(playbackListFragment);
+        }
         getClassDetail(getActivity().getIntent().getStringExtra("channelId"));
         tabVPFragmentAdapter = new PolyvTabVPFragmentAdapter(getActivity().getSupportFragmentManager(), fragmentLists);
         vp_tab.setAdapter(tabVPFragmentAdapter);

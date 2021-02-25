@@ -15,8 +15,9 @@ public class PolyvPlaybackListActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState != null)
+        if (savedInstanceState != null) {
             savedInstanceState.putParcelable("android:support:fragments", null);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.polyv_activity_playbacklist);
 

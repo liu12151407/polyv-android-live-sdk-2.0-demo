@@ -40,8 +40,9 @@ public class PolyvPlayerLightView extends FrameLayout {
     }
 
     public void hide() {
-        if (rl_center_light != null && rl_center_light.getVisibility() == View.VISIBLE)
+        if (rl_center_light != null && rl_center_light.getVisibility() == View.VISIBLE) {
             rl_center_light.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -50,10 +51,11 @@ public class PolyvPlayerLightView extends FrameLayout {
      * @param end {@link PolyvLiveVideoViewListener.OnGestureLeftDownListener}的回调方法参数
      */
     public void setViewLightValue(int brightness, boolean end) {
-        if (end)
+        if (end) {
             rl_center_light.setVisibility(View.GONE);
-        else
+        } else {
             rl_center_light.setVisibility(View.VISIBLE);
+        }
         tv_light.setText(brightness + "%");
     }
 }

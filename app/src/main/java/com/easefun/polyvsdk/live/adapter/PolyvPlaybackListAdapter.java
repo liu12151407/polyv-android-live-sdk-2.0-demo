@@ -52,8 +52,9 @@ public class PolyvPlaybackListAdapter extends AbsRecyclerViewAdapter {
     }
 
     public void updatePlayPosition(int position) {
-        if (playPosition == position)
+        if (playPosition == position) {
             return;
+        }
         int temp = playPosition;
         this.playPosition = position;
         notifyItemChanged(temp);
@@ -69,8 +70,9 @@ public class PolyvPlaybackListAdapter extends AbsRecyclerViewAdapter {
             itemViewHolder.tv_title.setText(content.title);
             itemViewHolder.tv_time.setText(content.duration);
             itemViewHolder.tv_playing.setVisibility(View.GONE);
-            if (position == playPosition)
+            if (position == playPosition) {
                 itemViewHolder.tv_playing.setVisibility(View.VISIBLE);
+            }
             if (TextUtils.isEmpty(content.channelSessionId)) {
                 itemViewHolder.tv_type.setText("normal");
             } else {

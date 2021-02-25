@@ -218,9 +218,10 @@ public class PolyvTimeUtils {
         int minutes = (totalSeconds / 60) % 60;
         int hours = totalSeconds / 3600;
 
-        if (fit || hours > 0)
+        if (fit || hours > 0) {
             return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
-        else
+        } else {
             return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+        }
     }
 }

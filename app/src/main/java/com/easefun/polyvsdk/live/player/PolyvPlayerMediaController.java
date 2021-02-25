@@ -344,8 +344,9 @@ public class PolyvPlayerMediaController extends PolyvLiveMediaController impleme
                     popupWindow.dismiss();
                 } catch (Exception e) {
                 }
-                if (popupWindowDismissListener != null)
+                if (popupWindowDismissListener != null) {
                     popupWindowDismissListener.dismiss();
+                }
             } else {
                 setVisibility(View.GONE);
             }

@@ -71,6 +71,7 @@ public class PolyvPlayerQuestionView extends RelativeLayout implements OnChecked
 					case PLEASE_SELECT_MSG:
 						builder.setTitle("提示");
 						builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+							@Override
 							public void onClick(DialogInterface dialog, int whichButton) {
 								dialog.dismiss();
 							}
@@ -79,6 +80,7 @@ public class PolyvPlayerQuestionView extends RelativeLayout implements OnChecked
 					case ANSWER_TIPS_MSG:
 						builder.setTitle("答案提示");
 						builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+							@Override
 							public void onClick(DialogInterface dialog, int whichButton) {
 								dialog.dismiss();
 								//重要，调用此方法，才会继续问答逻辑
@@ -135,7 +137,9 @@ public class PolyvPlayerQuestionView extends RelativeLayout implements OnChecked
 			
 			@Override
 			public void onClick(View v) {
-				if (rightAnswerNum == 0) return;
+				if (rightAnswerNum == 0) {
+					return;
+				}
 				List<Integer> indexList = new ArrayList<>();
 				if (rightAnswerNum > 1) {
 					int index = 0;

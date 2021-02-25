@@ -115,46 +115,52 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (getContext() == null)
+            if (getContext() == null) {
                 return;
+            }
             switch (msg.what) {
                 // 麦克风事件(包括老师开启/关闭通话，和结束某一个学员的通话)
                 case MICEVENT:
                     isGetMicTypeSuceess = true;
-                    if (isRegetDataSuccess && pb_loading.getVisibility() == View.VISIBLE)
+                    if (isRegetDataSuccess && pb_loading.getVisibility() == View.VISIBLE) {
                         pb_loading.setVisibility(View.GONE);
+                    }
                     PolyvMicrophoneEvent microphoneEvent = (PolyvMicrophoneEvent) msg.obj;
                     onlineListAdapter.updateLnikMicEvent(microphoneEvent);
                     // 是否是结束某一个学员通话的事件
                     boolean isStopLinkMicEvent = microphoneEvent.isStopLinkMicEvent();
                     // 老师是否是关闭了连麦
                     boolean isCloseLinkMicEven = !isStopLinkMicEvent && microphoneEvent.isCloseStatus();
-                    if (isCloseLinkMicEven)
+                    if (isCloseLinkMicEven) {
                         updateStatusAndButton(LINKMICSTATUS_UNUNITED);
+                    }
                     // 老师结束与自己的通话
                     if (isStopLinkMicEvent && microphoneEvent.userId.equals(linkMicManager.getLinkMicUid())
                             // 处于加入连麦状态，老师关闭了连麦
                             || isCloseLinkMicEven && linkMicManager.isJoinStatus()) {
                         leaveChannel();
-                        if (linkMicStatus == LINKMICSTATUS_CONNECTED)
+                        if (linkMicStatus == LINKMICSTATUS_CONNECTED) {
                             dialogFragment.show(getFragmentManager(), "dialogFragment", "老师已结束了与您的通话。");
+                        }
                         updateStatusAndButton(LINKMICSTATUS_UNUNITED);
                     }
                     break;
                 // 获取连麦的学员列表成功
                 case LINKMICUSERS:
                     isRegetDataSuccess = true;
-                    if (isGetMicTypeSuceess && pb_loading.getVisibility() == View.VISIBLE)
+                    if (isGetMicTypeSuceess && pb_loading.getVisibility() == View.VISIBLE) {
                         pb_loading.setVisibility(View.GONE);
+                    }
                     PolyvOnlineLinkMicUsersEntity onlineLinkMicUsersEntity = (PolyvOnlineLinkMicUsersEntity) msg.obj;
                     for (PolyvOnlineLinkMicUsersEntity.OnlineLinkMicUser linkMicUser : onlineLinkMicUsersEntity.onlineLinkMicUsers) {
                         if (chatManager.isUsedUid(linkMicUser.uid)) {
-                            if (isLinkMicConnected())
+                            if (isLinkMicConnected()) {
                                 linkMicUser.setJoinStatus();
-                            else if (isLinkMicWaiting())
+                            } else if (isLinkMicWaiting()) {
                                 linkMicUser.setWaitStatus();
-                            else
+                            } else {
                                 linkMicUser.setDefaultStatus();
+                            }
                             linkMicUser.setLinkMicUid(linkMicManager.getLinkMicUid());
                             break;
                         }
@@ -164,22 +170,25 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
                 // 当前的麦克风状态
                 case MICSTATUS:
                     isGetMicTypeSuceess = true;
-                    if (isRegetDataSuccess && pb_loading.getVisibility() == View.VISIBLE)
+                    if (isRegetDataSuccess && pb_loading.getVisibility() == View.VISIBLE) {
                         pb_loading.setVisibility(View.GONE);
+                    }
                     PolyvMicrophoneStatusEntity microphoneStatusEntity = (PolyvMicrophoneStatusEntity) msg.obj;
                     onlineListAdapter.setMicType(microphoneStatusEntity);
                     break;
                 // 收到请求连麦事件(包括所有学员)
                 case JOINREQUEST:
                     PolyvJoinRequestEntity requestEntity = (PolyvJoinRequestEntity) msg.obj;
-                    if (!requestEntity.user.userId.equals(linkMicManager.getLinkMicUid()))
+                    if (!requestEntity.user.userId.equals(linkMicManager.getLinkMicUid())) {
                         onlineListAdapter.updateLinkMicJoinRequest(requestEntity);
+                    }
                     break;
                 // 收到离开连麦事件(包括所有学员)
                 case JOINLEAVE:
                     PolyvJoinLeaveEntity leaveEntity = (PolyvJoinLeaveEntity) msg.obj;
-                    if (!leaveEntity.user.userId.equals(linkMicManager.getLinkMicUid()))
+                    if (!leaveEntity.user.userId.equals(linkMicManager.getLinkMicUid())) {
                         onlineListAdapter.updateLinkMicJoinLeave(leaveEntity);
+                    }
                     break;
                 // 收到加入连麦成功事件
                 case JOINSUCCESS:
@@ -196,10 +205,13 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
                     PolyvJoinResponseEntity responseEntity = (PolyvJoinResponseEntity) msg.obj;
                     if (onlineListAdapter.isVideoType())
                         // 开启视频功能
+                    {
                         linkMicManager.enableLocalVideo(true);
-                    else
+                    } else
                         // 不开启视频功能
+                    {
                         linkMicManager.enableLocalVideo(false);
+                    }
                     // 加入连麦
                     linkMicManager.joinChannel(responseEntity.roomId);
                     // 验证从加入连麦至加入连麦成功的时间是否超时
@@ -244,8 +256,9 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null)
+        if (view == null) {
             view = inflater.inflate(R.layout.polyv_fragment_onlinelist, container, false);
+        }
         return view;
     }
 
@@ -306,10 +319,11 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (isRequestSetting)
+                        if (isRequestSetting) {
                             permissionManager.requestSetting();
-                        else
+                        } else {
                             permissionManager.request();
+                        }
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -491,8 +505,9 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
             // 离开连麦
             linkMicManager.leaveChannel();
             // 如果没有发送离开事件
-            if (!isSended)
+            if (!isSended) {
                 chatManager.sendJoinLeave(linkMicManager.getLinkMicUid(), isConnectLost);
+            }
             // 播放器恢复为连麦前的音量
             viewPagerFragment.setVideoVolume(videoVolume);
             // 隐藏对话框
@@ -505,8 +520,9 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
             // 离开连麦
             linkMicManager.leaveChannel();
             // 发送离开事件
-            if (!isSended)
+            if (!isSended) {
                 chatManager.sendJoinLeave(linkMicManager.getLinkMicUid(), isConnectLost);
+            }
         }
     }
 
@@ -514,8 +530,9 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
      * 自己被取消禁言的时候调用
      */
     public void unshield() {
-        if (!isInitialized)
+        if (!isInitialized) {
             return;
+        }
         isShield = false;
     }
 
@@ -525,15 +542,18 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
      * @param isKicked true：被踢，false：被禁言
      */
     public void kickOrShield(boolean isKicked) {
-        if (!isInitialized)
+        if (!isInitialized) {
             return;
-        if (isKicked)
+        }
+        if (isKicked) {
             this.isKicked = true;
-        else
+        } else {
             this.isShield = true;
+        }
         if (linkMicManager.isJoinStatus()) {
-            if (linkMicStatus == LINKMICSTATUS_CONNECTED)
+            if (linkMicStatus == LINKMICSTATUS_CONNECTED) {
                 Toast.makeText(getContext(), "老师已结束了与您的通话。", Toast.LENGTH_SHORT).show();
+            }
             leaveChannel();
             updateStatusAndButton(LINKMICSTATUS_UNUNITED);
         } else if (chatManager.isRequestStatus()) {
@@ -545,8 +565,9 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
 
     // 聊天室登录成功时调用
     public void loginSuccess() {
-        if (!isInitialized)
+        if (!isInitialized) {
             return;
+        }
         // 初始化连麦配置
         linkMicManager.setupParentView(rl_parent);
         isKicked = false;
@@ -557,8 +578,9 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
 
     // 聊天室重连时调用
     public void reconnecting() {
-        if (!isInitialized)
+        if (!isInitialized) {
             return;
+        }
         isRegetDataSuccess = false;
         isGetMicTypeSuceess = false;
         pb_loading.setVisibility(View.VISIBLE);
@@ -573,14 +595,17 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
 
     // 聊天室重连成功时调用
     public void reconnectSuccess() {
-        if (!isInitialized)
+        if (!isInitialized) {
             return;
+        }
         isKicked = false;
         isShield = false;
         // 如果已经发送了举手请求并且没有处于加入连麦状态
         if (chatManager.isRequestStatus() && !linkMicManager.isJoinStatus())
             // 发送取消连麦请求的消息
+        {
             chatManager.sendJoinLeave(linkMicManager.getLinkMicUid());
+        }
         // 获取连麦的类型(因为可能在重连的过程中老师端的连麦类型改变了)
         getLinkMicType(chatManager.getChannelId());
         // 获取连麦的数据
@@ -590,8 +615,9 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == myRequestCode && resultCode == Activity.RESULT_CANCELED && onlineListAdapter.isOpenStatus())
+        if (requestCode == myRequestCode && resultCode == Activity.RESULT_CANCELED && onlineListAdapter.isOpenStatus()) {
             permissionManager.request();
+        }
     }
 
     @Override
@@ -612,8 +638,9 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
         // 移除监听
         linkMicManager.removeEventHandler(agEventHandler);
         // 发送离开连麦请求
-        if (chatManager.isRequestStatus())
+        if (chatManager.isRequestStatus()) {
             chatManager.sendJoinLeave(linkMicManager.getLinkMicUid());
+        }
         // 离开连麦并销毁
         linkMicManager.destroy(rl_parent);
         // 中断获取连麦数据
@@ -685,7 +712,7 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
     // 申请发言
     private void requestSpeak() {
         // 可能由于在允许权限的过程中，老师关闭了连麦，故这里需要进行判断
-        if (onlineListAdapter.isOpenStatus())
+        if (onlineListAdapter.isOpenStatus()) {
             if (isKicked || isShield) {
                 Toast.makeText(getContext(), "您当前无法申请发言", Toast.LENGTH_SHORT).show();
             } else if (pb_loading.getVisibility() == View.VISIBLE) {
@@ -698,6 +725,7 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
                     Toast.makeText(getContext(), "请登录聊天室后操作", Toast.LENGTH_SHORT).show();
                 }
             }
+        }
     }
 
     @Override

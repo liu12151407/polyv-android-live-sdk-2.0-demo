@@ -87,8 +87,9 @@ public class PolyvPopupWindow extends PopupWindow implements View.OnClickListene
     @Override
     public void onClick(View v) {
         resetSelect(v.getId());
-        if (onClickListener != null)
+        if (onClickListener != null) {
             onClickListener.onClick(v);
+        }
         dismiss();
     }
 }

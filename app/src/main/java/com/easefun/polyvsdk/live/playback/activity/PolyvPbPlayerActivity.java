@@ -181,8 +181,9 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals(FINISH_ACTIVITY))
+            if (action.equals(FINISH_ACTIVITY)) {
                 finish();
+            }
         }
     };
 
@@ -205,13 +206,15 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState != null)
+        if (savedInstanceState != null) {
             savedInstanceState.putParcelable("android:support:fragments", null);
+        }
         super.onCreate(savedInstanceState);
         //检测用户是否被踢，用户被踢则不能观看直播及回放，退出应用再进入可恢复
         channelId = getIntent().getStringExtra("channelId");
-        if (PolyvKickAssist.checkKickAndTips(channelId, this))
+        if (PolyvKickAssist.checkKickAndTips(channelId, this)) {
             return;
+        }
         setContentView(R.layout.polyv_activity_player_playback);
         // 生成播放器父控件的宽高比为16:9的高
         PolyvScreenUtils.generateHeight16_9(this);
@@ -231,10 +234,11 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
         initView();
 
         boolean isLandscape = getIntent().getBooleanExtra("isLandscape", false);
-        if (isLandscape)
+        if (isLandscape) {
             mediaController.changeToLandscape();
-        else
+        } else {
             mediaController.changeToPortrait();
+        }
 
         String playbackUrl = getIntent().getStringExtra("playbackUrl");
         if (TextUtils.isEmpty(playbackUrl)) {
@@ -376,13 +380,15 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
                 builder.setTitle("错误");
                 builder.setMessage(message);
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.dismiss();
                     }
                 });
 
-                if (videoView.getWindowToken() != null)
+                if (videoView.getWindowToken() != null) {
                     builder.show();
+                }
                 return true;
             }
         });
@@ -573,8 +579,9 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
                 }
 
                 if (end) {
-                    if (fastForwardPos < 0)
+                    if (fastForwardPos < 0) {
                         fastForwardPos = 0;
+                    }
                     videoView.seekTo(fastForwardPos);
                     if (videoView.isCompletedState()) {
                         videoView.start();
@@ -582,8 +589,9 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
                     fastForwardPos = 0;
                 } else {
                     fastForwardPos -= 10000;
-                    if (fastForwardPos <= 0)
+                    if (fastForwardPos <= 0) {
                         fastForwardPos = -1;
+                    }
                 }
                 progressView.setViewProgressValue(fastForwardPos, videoView.getDuration(), end, false);
             }
@@ -600,8 +608,9 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
                 }
 
                 if (end) {
-                    if (fastForwardPos > videoView.getDuration())
+                    if (fastForwardPos > videoView.getDuration()) {
                         fastForwardPos = videoView.getDuration();
+                    }
                     if (!videoView.isCompletedState()) {
                         videoView.seekTo(fastForwardPos);
                     } else if (videoView.isCompletedState() && fastForwardPos != videoView.getDuration()) {
@@ -611,8 +620,9 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
                     fastForwardPos = 0;
                 } else {
                     fastForwardPos += 10000;
-                    if (fastForwardPos > videoView.getDuration())
+                    if (fastForwardPos > videoView.getDuration()) {
                         fastForwardPos = videoView.getDuration();
+                    }
                 }
                 progressView.setViewProgressValue(fastForwardPos, videoView.getDuration(), end, true);
             }
@@ -621,11 +631,13 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
         videoView.setOnGestureClickListener(new IPolyvOnGestureClickListener() {
             @Override
             public void callback(boolean start, boolean end) {
-                if (videoView.isInPlaybackState() && mediaController != null)
-                    if (mediaController.isShowing())
+                if (videoView.isInPlaybackState() && mediaController != null) {
+                    if (mediaController.isShowing()) {
                         mediaController.hide();
-                    else
+                    } else {
                         mediaController.show();
+                    }
+                }
             }
         });
     }
@@ -644,8 +656,9 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
         firstStartView.hide();
         progressView.resetMaxValue();
         // 获取直播状态
-        if (isGetLiveStatus)
+        if (isGetLiveStatus) {
             getLive_Status();
+        }
     }
 
     public static Intent newUrlIntent(Context context, final String playbackUrl, final String title, boolean isLandscape) {
@@ -699,7 +712,9 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
      * 使用url播放普通回放。<br/>
      */
     public void playUrl(final String playbackUrl, final String title) {
-        if (TextUtils.isEmpty(playbackUrl)) return;
+        if (TextUtils.isEmpty(playbackUrl)) {
+            return;
+        }
         this.isPlaybackUrl = true;
         this.title = title;
         prepare();
@@ -711,7 +726,9 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
      * 使用vid播放普通回放。<br/>
      */
     public void playVid(final String vid, final int bitrate, boolean startNow, final boolean isMustFromLocal) {
-        if (TextUtils.isEmpty(vid)) return;
+        if (TextUtils.isEmpty(vid)) {
+            return;
+        }
         this.isPlaybackUrl = false;
         prepare();
         if (startNow) {
@@ -769,17 +786,19 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
 
     // 获取直播状态
     private void getLive_Status() {
-        if (live_status == null)
+        if (live_status == null) {
             live_status = new PolyvLive_Status();
+        }
         live_status.shutdownSchedule();
         live_status.getLive_Status(channelId, 6000, 4000, new PolyvLive_StatusNorListener() {
             @Override
             public void success(boolean isLiving, final boolean isPPTLive) {
                 if (isLiving) {
                     live_status.shutdownSchedule();
-                    if (tipsFragment == null)
+                    if (tipsFragment == null) {
                         tipsFragment = new PolyvTipsFragment();
-                    if (!isFinishing())
+                    }
+                    if (!isFinishing()) {
                         tipsFragment.show(getSupportFragmentManager(), "直播开始了，赶紧去观看吧！", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -802,6 +821,7 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
                                 }
                             }
                         });
+                    }
                 }
             }
 
@@ -812,14 +832,18 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
     }
 
     private void clearGestureInfo() {
-        if (videoView != null)
+        if (videoView != null) {
             videoView.clearGestureInfo();
-        if (progressView != null)
+        }
+        if (progressView != null) {
             progressView.hide();
-        if (volumeView != null)
+        }
+        if (volumeView != null) {
             volumeView.hide();
-        if (lightView != null)
+        }
+        if (lightView != null) {
             lightView.hide();
+        }
     }
 
     @Override
@@ -844,8 +868,9 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
     public void onStop() {
         super.onStop();
         //弹出去暂停
-        if (videoView != null)
+        if (videoView != null) {
             isPlay = videoView.onActivityStop();
+        }
     }
 
     @Override
@@ -861,22 +886,30 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
     public void onDestroy() {
         super.onDestroy();
         // 取消请求
-        if (live_status != null)
+        if (live_status != null) {
             live_status.shutdownSchedule();
+        }
         // 退出聊天室
-        if (chatManager != null)
+        if (chatManager != null) {
             chatManager.disconnect();
-        if (videoView != null)
+        }
+        if (videoView != null) {
             videoView.destroy();
-        if (questionView != null)
+        }
+        if (questionView != null) {
             questionView.hide();
-        if (auditionView != null)
+        }
+        if (auditionView != null) {
             auditionView.hide();
-        if (auxiliaryView != null)
+        }
+        if (auxiliaryView != null) {
             auxiliaryView.hide();
-        if (firstStartView != null)
+        }
+        if (firstStartView != null) {
             firstStartView.hide();
-        if (mediaController != null)
+        }
+        if (mediaController != null) {
             mediaController.disable();
+        }
     }
 }

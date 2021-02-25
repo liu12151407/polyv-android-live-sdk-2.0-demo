@@ -39,8 +39,9 @@ public class PolyvDanmuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        if (view == null)
+        if (view == null) {
             view = inflater.inflate(R.layout.polyv_fragment_danmu, container, false);
+        }
         return view;
     }
 
@@ -116,10 +117,11 @@ public class PolyvDanmuFragment extends Fragment {
     }
 
     public void pause(boolean fromuser) {
-        if (!fromuser)
+        if (!fromuser) {
             status_pause_fromuser = false;
-        else
+        } else {
             status_canauto_resume = false;
+        }
         if (mDanmakuView != null && mDanmakuView.isPrepared()) {
             mDanmakuView.pause();
         }
@@ -135,8 +137,9 @@ public class PolyvDanmuFragment extends Fragment {
             if (mDanmakuView != null && mDanmakuView.isPrepared() && mDanmakuView.isPaused()) {
                 if (!status_pause_fromuser) {
                     status_pause_fromuser = true;
-                    if (status_canauto_resume)
+                    if (status_canauto_resume) {
                         mDanmakuView.resume();
+                    }
                 } else {
                     status_canauto_resume = true;
                     mDanmakuView.resume();

@@ -148,8 +148,9 @@ public class PolyvLoginActivity extends Activity implements OnClickListener {
                 liveRestrict.getLiveRestrict(userId, channelId, new PolyvLiveRestrictListener() {
                     @Override
                     public void success(boolean canWatch, String errorCode) {
-                        if (!progress.isShowing())
+                        if (!progress.isShowing()) {
                             return;
+                        }
                         progress.dismiss();
                         if (PolyvLiveRestrict.ERRORCODE_4.equals(errorCode)) {
                             Toast.makeText(PolyvLoginActivity.this, liveRestrict.getTips(errorCode), Toast.LENGTH_SHORT).show();
@@ -160,8 +161,9 @@ public class PolyvLoginActivity extends Activity implements OnClickListener {
 
                     @Override
                     public void fail(String failTips, int code) {
-                        if (!progress.isShowing())
+                        if (!progress.isShowing()) {
                             return;
+                        }
                         progress.dismiss();
                         Toast.makeText(PolyvLoginActivity.this, "获取直播数据失败(" + code + ")\n" + failTips, Toast.LENGTH_SHORT).show();
                     }
@@ -173,8 +175,9 @@ public class PolyvLoginActivity extends Activity implements OnClickListener {
                 livePlayback.getLivePlayback(PolyvApplication.appId, PolyvApplication.appSecret, userId, channelId, new PolyvLivePlaybackListener() {
                     @Override
                     public void success(PolyvLivePlaybackEntity livePlaybackEntity) {
-                        if (!progress.isShowing())
+                        if (!progress.isShowing()) {
                             return;
+                        }
                         progress.dismiss();
                         Intent intent;
                         // 播放类型
@@ -199,9 +202,9 @@ public class PolyvLoginActivity extends Activity implements OnClickListener {
                             case PolyvLivePlaybackEntity.PLAYTYPE_PLAYBACK:
                                 String vid = livePlaybackEntity.channelJsonEntity.vid;
                                 int bitrate = livePlaybackEntity.channelJsonEntity.bitrate;
-                                if (vid != null)
+                                if (vid != null) {
                                     intent = PolyvPbPlayerActivity.newVidIntent(PolyvLoginActivity.this, vid, bitrate, true, false, false);
-                                else {
+                                } else {
                                     String playbackUrl = livePlaybackEntity.channelJsonEntity.playbackUrl;
                                     String title = livePlaybackEntity.channelJsonEntity.title;
                                     intent = PolyvPbPlayerActivity.newUrlIntent(PolyvLoginActivity.this, playbackUrl, title, false);
@@ -217,9 +220,9 @@ public class PolyvLoginActivity extends Activity implements OnClickListener {
                                 int ppt_bitrate = livePlaybackEntity.channelJsonEntity.bitrate;
                                 String sessionId = livePlaybackEntity.channelJsonEntity.recordFileSessionId;
                                 boolean isList = livePlaybackEntity.recordFilesEntity.data.contents.size() > 0;
-                                if (ppt_vid != null)
+                                if (ppt_vid != null) {
                                     intent = PolyvPPTPbPlayerActivity.newVidIntent(PolyvLoginActivity.this, ppt_vid, ppt_bitrate, true, false, sessionId, isList, false);
-                                else {
+                                } else {
                                     String playbackUrl = livePlaybackEntity.channelJsonEntity.playbackUrl;
                                     String title = livePlaybackEntity.channelJsonEntity.title;
                                     intent = PolyvPPTPbPlayerActivity.newUrlIntent(PolyvLoginActivity.this, playbackUrl, title, sessionId, isList, false);
@@ -232,8 +235,9 @@ public class PolyvLoginActivity extends Activity implements OnClickListener {
 
                     @Override
                     public void fail(final String failTips, final int code) {
-                        if (!progress.isShowing())
+                        if (!progress.isShowing()) {
                             return;
+                        }
                         progress.dismiss();
                         Toast.makeText(PolyvLoginActivity.this, "获取直播数据失败(" + code + ")\n" + failTips, Toast.LENGTH_SHORT).show();
                     }

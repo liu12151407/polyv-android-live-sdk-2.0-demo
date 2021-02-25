@@ -24,8 +24,9 @@ public class AdmasterSdkUtils {
 			} else if (adMatter.getLocation().equals(PolyvLiveChannelVO.ADMatter.LOCATION_PAUSE)) {
 				advertShowUrl = adMatter.getStopAdvertShowUrl();
 			}
-			if (!TextUtils.isEmpty(advertShowUrl))
+			if (!TextUtils.isEmpty(advertShowUrl)) {
 				AdmasterSdk.onExpose(advertShowUrl);
+			}
 			break;
 
 		case MONITOR_CLICK:
@@ -35,8 +36,9 @@ public class AdmasterSdkUtils {
 			} else if (adMatter.getLocation().equals(PolyvLiveChannelVO.ADMatter.LOCATION_PAUSE)) {
 				advertClickUrl = adMatter.getStopAdvertClickUrl();
 			}
-			if (!TextUtils.isEmpty(advertClickUrl))
+			if (!TextUtils.isEmpty(advertClickUrl)) {
 				AdmasterSdk.onClick(advertClickUrl);
+			}
 			break;
 		}
 	}
