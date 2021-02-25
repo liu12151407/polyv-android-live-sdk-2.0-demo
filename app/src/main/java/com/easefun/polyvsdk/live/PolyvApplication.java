@@ -15,12 +15,12 @@ public class PolyvApplication extends MultiDexApplication {
      * 初始化直播SDK，需要用到的appId。
      * appId可以在直播系统管理后台的用户信息页的API设置中获取。
      */
-    public static final String appId = "";
+    public static final String appId = "fw3tzepxn1";
     /**
      * 初始化直播SDK，需要用到的appSecret。
      * appSecret可以在直播系统管理后台的用户信息页的API设置中获取。
      */
-    public static final String appSecret = "";
+    public static final String appSecret = "ace7ee93632b4c5b85e2aaa786177882";
 
     @Override
     public void onCreate() {
@@ -51,11 +51,11 @@ public class PolyvApplication extends MultiDexApplication {
     //加密秘钥和加密向量，在点播后台->设置->API接口中获取，用于解密SDK加密串
     //值修改请参考https://github.com/easefun/polyv-android-sdk-demo/wiki/10.%E5%85%B3%E4%BA%8E-SDK%E5%8A%A0%E5%AF%86%E4%B8%B2-%E4%B8%8E-%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%E5%8A%A0%E5%AF%86%E4%BC%A0%E8%BE%93
     /** 加密秘钥，可以在点播后台获取 */
-    private String aeskey = "VXtlHmwfS2oYm0CZ";
+    private String aeskey = "RhyKMPfRMr6W5c79";
     /** 加密向量，可以在点播后台获取 */
-    private String iv = "2u9gDPKdX6GyQJKU";
+    private String iv = "Ov66378thHPEdKVT";
     /** SDK加密串，可以在点播后台获取 */
-    private String config = "";
+    private String config = "uUPiEFa3WKfASl9dTqP6RIKdyqWQ/1oC7HpMu0+O4yn9WzfL/gUCFFei2PuGKZex8Ifn86s6DWnGFqbI9w4DPVp+/znYFrkRU1uATtCIr1cOm8xkby22kNjCIJXd/FvRNIHOk35UvNWvAhpgK/lbnQ==";
 
     /**
      * 初始化回放的配置
