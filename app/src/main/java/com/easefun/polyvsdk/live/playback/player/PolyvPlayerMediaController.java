@@ -141,8 +141,9 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
             // 单位：毫秒
             int position = videoView.getCurrentPosition();
             int totalTime = videoView.getDuration() / 1000 * 1000;
-            if (videoView.isCompletedState() || position > totalTime)
+            if (videoView.isCompletedState() || position > totalTime) {
                 position = totalTime;
+            }
             int bufPercent = videoView.getBufferPercentage();
             //在拖动进度条的时候，这里不更新
             if (!status_dragging) {
@@ -326,18 +327,21 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
     public void preparedView(boolean isPlaybackUrl, boolean isPPTPlayback, String playBackUrlTitle) {
         if (videoView != null) {
             videoVO = videoView.getVideo();
-            if (isPlaybackUrl)
+            if (isPlaybackUrl) {
                 tv_title.setText(playBackUrlTitle);
-            else if (videoVO != null)
+            } else if (videoVO != null) {
                 tv_title.setText(videoVO.getTitle());
-            if (isPlaybackUrl)
+            }
+            if (isPlaybackUrl) {
                 tv_bit.setVisibility(View.GONE);
-            else
+            } else {
                 tv_bit.setVisibility(View.VISIBLE);
-            if (isPPTPlayback)
+            }
+            if (isPPTPlayback) {
                 ll_scr.setVisibility(View.GONE);
-            else
+            } else {
                 ll_scr.setVisibility(View.VISIBLE);
+            }
             int totalTime = videoView.getDuration();
             tv_tottime.setText(PolyvTimeUtils.generateTime(totalTime));
             tv_tottime_land.setText(PolyvTimeUtils.generateTime(totalTime));
@@ -383,8 +387,9 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
                     popupWindow.dismiss();
                 } catch (Exception e) {
                 }
-                if (popupWindowDismissListener != null)
+                if (popupWindowDismissListener != null) {
                     popupWindowDismissListener.dismiss();
+                }
             } else {
                 setVisibility(View.GONE);
             }
@@ -415,10 +420,11 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
      */
     @Override
     public void show(int timeout) {
-        if (timeout < 0)
+        if (timeout < 0) {
             status_showalways = true;
-        else
+        } else {
             status_showalways = false;
+        }
         if (!isShowing) {
             resetTopBottomLayout(View.VISIBLE);
             //获取焦点
@@ -517,8 +523,9 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
     SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            if (!b)
+            if (!b) {
                 return;
+            }
             switch (seekBar.getId()) {
                 case R.id.sb_play:
                 case R.id.sb_play_land:
@@ -531,26 +538,30 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
                     }
                     break;
                 case R.id.sb_light:
-                    if (videoView != null)
+                    if (videoView != null) {
                         videoView.setBrightness(videoActivity, i);
+                    }
                     break;
                 case R.id.sb_volume:
-                    if (videoView != null)
+                    if (videoView != null) {
                         videoView.setVolume(i);
+                    }
                     break;
             }
         }
 
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
-            if (!seekBar.isSelected())
+            if (!seekBar.isSelected()) {
                 seekBar.setSelected(true);
+            }
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-            if (seekBar.isSelected())
+            if (seekBar.isSelected()) {
                 seekBar.setSelected(false);
+            }
             switch (seekBar.getId()) {
                 case R.id.sb_play:
                 case R.id.sb_play_land:
@@ -572,8 +583,9 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
     //重置控制栏的隐藏时间
     private void resetHideTime(int delayedTime) {
         handler.removeMessages(HIDE);
-        if (delayedTime >= 0)
+        if (delayedTime >= 0) {
             handler.sendMessageDelayed(handler.obtainMessage(HIDE), delayedTime);
+        }
     }
 
     //重置控制栏的顶部和底部布局以及进度条的显示状态
@@ -614,8 +626,9 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
     //重置选择播放器银幕比率控件的状态
     private void resetRatioView(int screenRatio) {
         initRatioView(screenRatio);
-        if (videoView != null)
+        if (videoView != null) {
             videoView.setAspectRatio(screenRatio);
+        }
     }
 
     //初始化选择播放器银幕比率控件
@@ -642,8 +655,9 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
 
     //重置选择字幕的控件
     private void resetSrtView(int srtPosition) {
-        if (videoView != null)
+        if (videoView != null) {
             videoView.changeSRT(initSrtView(srtPosition));
+        }
     }
 
     private String initSrtView(int srtPosition) {
@@ -652,8 +666,9 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
         tv_srt3.setSelected(false);
         tv_srtnone.setSelected(false);
         List<String> srtKeys = new ArrayList<String>();
-        if (videoVO != null)
+        if (videoVO != null) {
             srtKeys.addAll(videoVO.getVideoSRT().keySet());
+        }
         switch (srtPosition) {
             case 0:
                 tv_srt1.setSelected(true);
@@ -681,8 +696,9 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
         tv_srt3.setVisibility(View.VISIBLE);
         tv_srtnone.setSelected(false);
         List<String> srtKeys = new ArrayList<String>();
-        if (videoVO != null)
+        if (videoVO != null) {
             srtKeys.addAll(videoVO.getVideoSRT().keySet());
+        }
         switch (srtKeys.size()) {
             case 0:
                 tv_srt1.setVisibility(View.GONE);
@@ -869,8 +885,9 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
     //重置选择码率的控件
     private void resetBitRateView(int bitRate) {
         initBitRateView(bitRate);
-        if (videoView != null)
+        if (videoView != null) {
             videoView.changeBitRate(bitRate);
+        }
         hide();
     }
 
@@ -952,16 +969,18 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
                 resetSrtView(3);
                 break;
             case R.id.tv_speed:
-                if (rl_center_speed.getVisibility() == View.GONE)
+                if (rl_center_speed.getVisibility() == View.GONE) {
                     resetSpeedLayout(View.VISIBLE);
-                else
+                } else {
                     resetSpeedLayout(View.GONE);
+                }
                 break;
             case R.id.tv_bit:
-                if (rl_center_bit.getVisibility() == View.GONE)
+                if (rl_center_bit.getVisibility() == View.GONE) {
                     resetBitRateLayout(View.VISIBLE);
-                else
+                } else {
                     resetBitRateLayout(View.GONE);
+                }
                 break;
             case R.id.tv_sc:
                 resetBitRateView(3);
@@ -1004,8 +1023,9 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
                 break;
         }
         //如果控制栏不是处于一直显示的状态，那么重置控制栏隐藏的时间
-        if (!status_showalways)
+        if (!status_showalways) {
             resetHideTime(longTime);
+        }
     }
 
     public interface PopupWindowDismissListener {

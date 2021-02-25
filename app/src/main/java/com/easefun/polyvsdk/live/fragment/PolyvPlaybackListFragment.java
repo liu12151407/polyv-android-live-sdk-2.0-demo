@@ -50,8 +50,9 @@ public class PolyvPlaybackListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null)
+        if (view == null) {
             view = inflater.inflate(R.layout.polyv_fragment_playbacklist, container, false);
+        }
         return view;
     }
 
@@ -74,16 +75,17 @@ public class PolyvPlaybackListFragment extends Fragment {
     }
 
     private void loadPlaybackList(boolean isShowProgressBar) {
-        if (isShowProgressBar)
+        if (isShowProgressBar) {
             pb_loading.setVisibility(View.VISIBLE);
+        }
         liveRecordFiles.shutdown();
         liveRecordFiles.getRecordFiles(PolyvApplication.appId, PolyvApplication.appSecret,
                 getIntent().getStringExtra("channelId"), page, Integer.MAX_VALUE, new PolyvLiveRecordFilesListener() {
                     @Override
                     public void success(PolyvLiveRecordFilesEntity recordFilesEntity) {
-                        if (PolyvPlaybackListFragment.this.recordFilesEntity == null)
+                        if (PolyvPlaybackListFragment.this.recordFilesEntity == null) {
                             PolyvPlaybackListFragment.this.recordFilesEntity = recordFilesEntity;
-                        else {
+                        } else {
                             PolyvPlaybackListFragment.this.recordFilesEntity.data.contents.addAll(recordFilesEntity.data.contents);
                             PolyvPlaybackListFragment.this.recordFilesEntity.page = page;
                         }
@@ -91,13 +93,16 @@ public class PolyvPlaybackListFragment extends Fragment {
                         pb_loading.setVisibility(View.GONE);
                         loadMoreView.setVisibility(View.GONE);
                         playbackListAdapter.addAll(recordFilesEntity.data.contents);
-                        if (page == 1)
+                        if (page == 1) {
                             updatePlayPosition(getIntent());
-                        if (recordFilesEntity.data.contents.size() == 0 && page == 1)
+                        }
+                        if (recordFilesEntity.data.contents.size() == 0 && page == 1) {
                             tv_empty.setVisibility(View.VISIBLE);
+                        }
                         // 如果总页数和当前页数相等，说明没有更多的数据了
-                        if (recordFilesEntity.data.totalPages == page)
+                        if (recordFilesEntity.data.totalPages == page) {
                             headerViewRecyclerAdapter.removeFootView();
+                        }
                     }
 
                     @Override
@@ -157,14 +162,16 @@ public class PolyvPlaybackListFragment extends Fragment {
     }
 
     public void initView(final Intent intent) {
-        if (!isInitialized)
+        if (!isInitialized) {
             return;
+        }
         recordFilesEntity = (PolyvLiveRecordFilesEntity) intent.getSerializableExtra("playbackList");
         if (recordFilesEntity != null) {
             contents = new ArrayList<>(recordFilesEntity.data.contents);
             page = recordFilesEntity.page;
-            if (contents.size() == 0)
+            if (contents.size() == 0) {
                 tv_empty.setVisibility(View.VISIBLE);
+            }
         } else {
             loadPlaybackList(true);
         }
@@ -210,28 +217,31 @@ public class PolyvPlaybackListFragment extends Fragment {
         rv_playback.setNestedScrollingEnabled(false);
         // 设置布局管理器
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        if (rv_playback.getLayoutManager() == null)
+        if (rv_playback.getLayoutManager() == null) {
             rv_playback.setLayoutManager(linearLayoutManager);
+        }
         // 设置适配器
         rv_playback.setAdapter(headerViewRecyclerAdapter);
         if (recordFilesEntity == null || recordFilesEntity.data.totalPages > page) {
             headerViewRecyclerAdapter.removeFootView();
             createLoadMoreView();
-            if (onScrollListener == null)
+            if (onScrollListener == null) {
                 rv_playback.addOnScrollListener(createScrollListener());
+            }
             onScrollListener.refresh();
         }
     }
 
     private void createLoadMoreView() {
-        if (loadMoreView == null)
+        if (loadMoreView == null) {
             loadMoreView = LayoutInflater.from(getContext()).inflate(R.layout.polyv_bottom_loadmorelayout, rv_playback, false);
+        }
         headerViewRecyclerAdapter.addFooterView(loadMoreView);
         loadMoreView.setVisibility(View.GONE);
     }
 
     private EndlessRecyclerOnScrollListener createScrollListener() {
-        if (onScrollListener == null)
+        if (onScrollListener == null) {
             onScrollListener = new EndlessRecyclerOnScrollListener(linearLayoutManager) {
                 @Override
                 public void onLoadMore(int currentPage) {
@@ -242,6 +252,7 @@ public class PolyvPlaybackListFragment extends Fragment {
                     }
                 }
             };
+        }
         return onScrollListener;
     }
 

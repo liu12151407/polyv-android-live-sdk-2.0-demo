@@ -91,6 +91,7 @@ public class PolyvPermission {
                 builder.setTitle("提示");
                 builder.setMessage("需要权限被拒绝，是否允许再次提示权限申请？");
                 builder.setPositiveButton("允许", new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         for(String perm: permissionsRejected){
                             clearMarkAsAsked(perm);
@@ -113,7 +114,9 @@ public class PolyvPermission {
 
     public boolean operationHasPermission(int num) {
         OperationType operationType = OperationType.getOperationType(num);
-        if (operationType == null) return false;
+        if (operationType == null) {
+            return false;
+        }
         switch (operationType) {
             case play:
                 return hasPermission(Manifest.permission.READ_PHONE_STATE)
@@ -221,6 +224,7 @@ public class PolyvPermission {
         builder.setTitle("提示");
         builder.setMessage("需要权限被拒绝，是否允许再次提示权限申请？");
         builder.setPositiveButton("允许", new DialogInterface.OnClickListener() {
+            @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 for(String perm: permissionsRejected){
                     clearMarkAsAsked(perm);

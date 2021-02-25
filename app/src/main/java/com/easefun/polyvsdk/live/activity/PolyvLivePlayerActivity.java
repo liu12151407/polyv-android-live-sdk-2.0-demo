@@ -125,8 +125,9 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         //检测用户是否被踢，用户被踢则不能观看直播及回放，退出应用再进入可恢复
         channelId = getIntent().getStringExtra("channelId");
-        if (PolyvKickAssist.checkKickAndTips(channelId, this))
+        if (PolyvKickAssist.checkKickAndTips(channelId, this)) {
             return;
+        }
         setContentView(R.layout.polyv_activity_player_live);
         // 生成播放器父控件的宽高比为16:9的高
         PolyvScreenUtils.generateHeight16_9(this);
@@ -146,10 +147,11 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
         initPlayErrorView();
 
         boolean isLandscape = getIntent().getBooleanExtra("isLandscape", false);
-        if (isLandscape)
+        if (isLandscape) {
             mediaController.changeToLandscape();
-        else
+        } else {
             mediaController.changeToPortrait();
+        }
 
         setLivePlay(userId, channelId);
     }
@@ -321,8 +323,9 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
         videoView.setOnGetMarqueeVoListener(new PolyvLiveVideoViewListener.OnGetMarqueeVoListener() {
             @Override
             public void onGetMarqueeVo(PolyvLiveMarqueeVo marqueeVo) {
-                if (marqueeUtils == null)
+                if (marqueeUtils == null) {
                     marqueeUtils = new PolyvMarqueeUtils();
+                }
                 // 更新为后台设置的跑马灯类型
                 marqueeUtils.updateMarquee(PolyvLivePlayerActivity.this, marqueeVo, marqueeItem, channelId, userId, nickName);
             }
@@ -471,8 +474,9 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
         advertCountDown.setVisibility(View.GONE);
         auxiliaryView.hide();
         // 取消请求
-        if (marqueeUtils != null)
+        if (marqueeUtils != null) {
             marqueeUtils.shutdown();
+        }
     }
 
     @Override
@@ -517,8 +521,9 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
 
     // 获取直播状态
     private void getLive_Status() {
-        if (live_status == null)
+        if (live_status == null) {
             live_status = new PolyvLive_Status();
+        }
         live_status.shutdownSchedule();
         live_status.getLive_Status(channelId, 6000, 4000, new PolyvLive_StatusNorListener() {
             @Override
@@ -527,9 +532,9 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
                     live_status.shutdownSchedule();
                     if (!isFinishing()) {
                         Toast.makeText(PolyvLivePlayerActivity.this, "直播开始了！", Toast.LENGTH_SHORT).show();
-                        if (!isPPTLive || !isToOtherLivePlayer)
+                        if (!isPPTLive || !isToOtherLivePlayer) {
                             setLivePlay(userId, channelId);
-                        else {
+                        } else {
                             startActivity(PolyvPPTLivePlayerActivity.newIntent(PolyvLivePlayerActivity.this, userId, channelId, chatUserId, nickName, false));
                             finish();
                         }
@@ -544,12 +549,15 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
     }
 
     private void clearGestureInfo() {
-        if (videoView != null)
+        if (videoView != null) {
             videoView.clearGestureInfo();
-        if (lightView != null)
+        }
+        if (lightView != null) {
             lightView.hide();
-        if (volumeView != null)
+        }
+        if (volumeView != null) {
             volumeView.hide();
+        }
     }
 
     @Override
@@ -583,19 +591,25 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
     public void onDestroy() {
         super.onDestroy();
         // 取消请求
-        if (live_status != null)
+        if (live_status != null) {
             live_status.shutdownSchedule();
-        if (marqueeUtils != null)
+        }
+        if (marqueeUtils != null) {
             marqueeUtils.shutdown();
+        }
         // 退出聊天室
-        if (chatManager != null)
+        if (chatManager != null) {
             chatManager.disconnect();
-        if (videoView != null)
+        }
+        if (videoView != null) {
             videoView.destroy();
-        if (auxiliaryView != null)
+        }
+        if (auxiliaryView != null) {
             auxiliaryView.hide();
-        if (mediaController != null)
+        }
+        if (mediaController != null) {
             mediaController.disable();
+        }
         // 关闭广告监测器
         AdmasterSdk.terminateSDK();
     }

@@ -61,7 +61,9 @@ public class PolyvPlayerAuxiliaryView extends RelativeLayout {
 			
 			@Override
 			public void onClick(View v) {
-				if (mADMatter == null) return;
+				if (mADMatter == null) {
+					return;
+				}
 				String path = mADMatter.getAddrUrl();
 				if (TextUtils.isEmpty(path) == false) {
 					try {

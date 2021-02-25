@@ -61,8 +61,9 @@ public class PolyvEmoGridViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null)
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.polyv_gridview_emo_item, null);
+        }
         ImageView iv_emo = PolyvViewHolder.get(convertView, R.id.iv_emo);
         if (iv_emo.getTag() == null) {
             int id = PolyvFaceManager.getInstance().getFaceId(lists.get(position));
@@ -71,8 +72,9 @@ public class PolyvEmoGridViewAdapter extends BaseAdapter {
                 Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
                 bitmap = eraseColor(bitmap, Color.WHITE);
                 bitmap = eraseColor(bitmap, Color.rgb(230, 230, 230));
-                if (id != R.drawable.polyv_33 && id != R.drawable.polyv_71)
+                if (id != R.drawable.polyv_33 && id != R.drawable.polyv_71) {
                     bitmap = eraseColor(bitmap, Color.BLACK);
+                }
                 iv_emo.setImageBitmap(bitmap);
             } else {
                 iv_emo.setImageDrawable(drawable);

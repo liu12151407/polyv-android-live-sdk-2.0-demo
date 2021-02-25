@@ -79,8 +79,9 @@ public class PolyvOnlineListAdapter extends AbsRecyclerViewAdapter {
     // 设置连麦的类型
     public void setMicType(PolyvMicrophoneStatusEntity statusEntity) {
         this.micType = statusEntity.type;
-        if (lists != null && lists.size() > 0)
+        if (lists != null && lists.size() > 0) {
             notifyDataSetChanged();
+        }
     }
 
     /**
@@ -168,9 +169,9 @@ public class PolyvOnlineListAdapter extends AbsRecyclerViewAdapter {
         if (isTeacherEvent) {
             micType = microphoneEvent.type;
             isOpenStatus = microphoneEvent.isOpenStatus();
-            if (isOpenStatus)
+            if (isOpenStatus) {
                 bt_speak.setVisibility(View.VISIBLE);
-            else {
+            } else {
                 bt_speak.setText("申请发言");
                 bt_speak.setTextColor(bt_speak.getContext().getResources().getColor(R.color.top_layout_color_white));
                 bt_speak.setBackgroundResource(R.drawable.polyv_tv_press);
@@ -191,8 +192,9 @@ public class PolyvOnlineListAdapter extends AbsRecyclerViewAdapter {
                         onlineLinkMicUser.setDefaultStatus();
                     }
                 }
-                if (!isOpenStatus)
+                if (!isOpenStatus) {
                     Collections.sort(lists, PolyvOnlineLinkMicUsersEntity.linkMicComparator);
+                }
                 notifyDataSetChanged();
             }
         }
@@ -227,15 +229,17 @@ public class PolyvOnlineListAdapter extends AbsRecyclerViewAdapter {
             PolyvOnlineLinkMicUsersEntity.OnlineLinkMicUser onlineLinkMicUser = lists.get(position);
             ImageLoader.getInstance().displayImage(onlineLinkMicUser.pic, viewHolder.iv_avatar, options);
             // 如果是开启视频通话
-            if (isVideoType())
+            if (isVideoType()) {
                 viewHolder.iv_mictype.setSelected(true);
-            else
+            } else {
                 viewHolder.iv_mictype.setSelected(false);
+            }
             // 如果是自己登录聊天室用过的uid
-            if (chatManager.isUsedUid(onlineLinkMicUser.uid))
+            if (chatManager.isUsedUid(onlineLinkMicUser.uid)) {
                 viewHolder.tv_nickname.setText(onlineLinkMicUser.nick + "(我)");
-            else
+            } else {
                 viewHolder.tv_nickname.setText(onlineLinkMicUser.nick);
+            }
             //设置头衔
             if (onlineLinkMicUser.authorization != null) {
                 viewHolder.tv_usertype.setText(onlineLinkMicUser.authorization.getActor());

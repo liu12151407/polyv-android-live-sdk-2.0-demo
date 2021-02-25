@@ -25,8 +25,9 @@ public class PolyvGrayImageView extends ImageView {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		if (isPressed())
+		if (isPressed()) {
 			canvas.drawColor(getResources().getColor(R.color.commom_click_color_gray_half));
+		}
 	}
 
 	@Override

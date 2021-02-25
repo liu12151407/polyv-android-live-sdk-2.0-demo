@@ -175,8 +175,9 @@ public class PolyvShareUtils {
 
         List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
         for (int i = 0; i < pinfo.size(); i++) {
-            if (((PackageInfo) pinfo.get(i)).packageName.equalsIgnoreCase(packageName))
+            if (((PackageInfo) pinfo.get(i)).packageName.equalsIgnoreCase(packageName)) {
                 return true;
+            }
         }
         return false;
     }

@@ -136,10 +136,14 @@ public class HeaderViewRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
 
   private void setWrappedAdapter(RecyclerView.Adapter adapter) {
 
-    if (mWrappedAdapter != null) mWrappedAdapter.unregisterAdapterDataObserver(mDataObserver);
+    if (mWrappedAdapter != null) {
+        mWrappedAdapter.unregisterAdapterDataObserver(mDataObserver);
+    }
     mWrappedAdapter = adapter;
     Class adapterClass = mWrappedAdapter.getClass();
-    if (!mItemTypesOffset.containsKey(adapterClass)) putAdapterTypeOffset(adapterClass);
+    if (!mItemTypesOffset.containsKey(adapterClass)) {
+        putAdapterTypeOffset(adapterClass);
+    }
     mWrappedAdapter.registerAdapterDataObserver(mDataObserver);
   }
 

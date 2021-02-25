@@ -126,13 +126,15 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState != null)
+        if (savedInstanceState != null) {
             savedInstanceState.putParcelable("android:support:fragments", null);
+        }
         super.onCreate(savedInstanceState);
         //检测用户是否被踢，用户被踢则不能观看直播及回放，退出应用再进入可恢复
         channelId = getIntent().getStringExtra("channelId");
-        if (PolyvKickAssist.checkKickAndTips(channelId, this))
+        if (PolyvKickAssist.checkKickAndTips(channelId, this)) {
             return;
+        }
         setContentView(R.layout.polyv_activity_player_pptlive);
         // 生成播放器父控件的宽高比为16:9的高
         PolyvScreenUtils.generateHeight16_9(this);
@@ -151,10 +153,11 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
         initView();
 
         boolean isLandscape = getIntent().getBooleanExtra("isLandscape", false);
-        if (isLandscape)
+        if (isLandscape) {
             mediaController.changeToLandscape();
-        else
+        } else {
             mediaController.changeToPortrait();
+        }
 
         setPPTLivePlay(userId, channelId, chatUserId, nickName);
     }
@@ -258,10 +261,11 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
                         // 若初始为竖屏
                         : viewLayout.getMeasuredHeight();
                 rl_container.setLayoutParams(rlp);
-                if (Build.VERSION.SDK_INT >= 16)
+                if (Build.VERSION.SDK_INT >= 16) {
                     rl_container.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                else
+                } else {
                     rl_container.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                }
             }
         });
         rl_parent.addOnLayoutChangeListener(rl_parent_onLayoutChangeListener = new View.OnLayoutChangeListener() {
@@ -271,12 +275,14 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
                 if (bottom > 0 && oldBottom > 0 && right == oldRight) {
                     if (Math.abs(bottom - oldBottom) > PolyvScreenUtils.getNormalWH(PolyvPPTLivePlayerActivity.this)[1] * 0.3)
                         // 键盘关闭
+                    {
                         if (bottom > oldBottom) {
                             videoView.PPTLiveLayoutResume();
                         }// 键盘弹出
                         else if (bottom < oldBottom) {
                             videoView.PPTLiveLayoutChange();
                         }
+                    }
                 }
             }
         });
@@ -422,8 +428,9 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
         videoView.setOnGetMarqueeVoListener(new PolyvLiveVideoViewListener.OnGetMarqueeVoListener() {
             @Override
             public void onGetMarqueeVo(PolyvLiveMarqueeVo marqueeVo) {
-                if (marqueeUtils == null)
+                if (marqueeUtils == null) {
                     marqueeUtils = new PolyvMarqueeUtils();
+                }
                 // 更新为后台设置的跑马灯类型
                 marqueeUtils.updateMarquee(PolyvPPTLivePlayerActivity.this, marqueeVo, marqueeItem, channelId, userId, nickName);
             }
@@ -551,8 +558,9 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
         advertCountDown.setVisibility(View.GONE);
         auxiliaryView.hide();
         // 取消请求
-        if (marqueeUtils != null)
+        if (marqueeUtils != null) {
             marqueeUtils.shutdown();
+        }
     }
 
     public static Intent newIntent(Context context, String userId, String channelId, String chatUserId, String nickName, boolean isLandscape) {
@@ -613,8 +621,9 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
 
     // 获取直播状态
     private void getLive_Status() {
-        if (live_status == null)
+        if (live_status == null) {
             live_status = new PolyvLive_Status();
+        }
         live_status.shutdownSchedule();
         live_status.getLive_Status(channelId, 6000, 4000, new PolyvLive_StatusNorListener() {
             @Override
@@ -623,9 +632,9 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
                     live_status.shutdownSchedule();
                     if (!isFinishing()) {
                         Toast.makeText(PolyvPPTLivePlayerActivity.this, "直播开始了！", Toast.LENGTH_SHORT).show();
-                        if (isPPTLive || !isToOtherLivePlayer)
+                        if (isPPTLive || !isToOtherLivePlayer) {
                             setPPTLivePlay(userId, channelId, chatUserId, nickName);
-                        else {
+                        } else {
                             startActivity(PolyvLivePlayerActivity.newIntent(PolyvPPTLivePlayerActivity.this, userId, channelId, chatUserId, nickName, false));
                             finish();
                         }
@@ -640,12 +649,15 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
     }
 
     private void clearGestureInfo() {
-        if (videoView != null)
+        if (videoView != null) {
             videoView.clearGestureInfo();
-        if (lightView != null)
+        }
+        if (lightView != null) {
             lightView.hide();
-        if (volumeView != null)
+        }
+        if (volumeView != null) {
             volumeView.hide();
+        }
     }
 
     @Override
@@ -670,29 +682,37 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
     public void onStop() {
         super.onStop();
         //弹出去暂停
-        if (videoView != null)
+        if (videoView != null) {
             isPlay = videoView.onActivityStop();
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         // 取消请求
-        if (live_status != null)
+        if (live_status != null) {
             live_status.shutdownSchedule();
-        if (marqueeUtils != null)
+        }
+        if (marqueeUtils != null) {
             marqueeUtils.shutdown();
+        }
         // 退出聊天室
-        if (chatManager != null)
+        if (chatManager != null) {
             chatManager.disconnect();
-        if (rl_parent != null)
+        }
+        if (rl_parent != null) {
             rl_parent.removeOnLayoutChangeListener(rl_parent_onLayoutChangeListener);
-        if (videoView != null)
+        }
+        if (videoView != null) {
             videoView.destroy();
-        if (auxiliaryView != null)
+        }
+        if (auxiliaryView != null) {
             auxiliaryView.hide();
-        if (mediaController != null)
+        }
+        if (mediaController != null) {
             mediaController.disable();
+        }
         // 关闭广告监测器
         AdmasterSdk.terminateSDK();
     }

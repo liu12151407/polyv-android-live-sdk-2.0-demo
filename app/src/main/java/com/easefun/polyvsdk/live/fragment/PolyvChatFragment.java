@@ -140,8 +140,9 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (getContext() == null)
+            if (getContext() == null) {
                 return;
+            }
             switch (msg.what) {
                 case RECEIVEMESSAGE:
                     final PolyvChatMessage chatMessage = (PolyvChatMessage) msg.obj;
@@ -157,8 +158,9 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                         }
                     } else if (chatMessage.getChatType() == PolyvChatMessage.CHATTYPE_RECEIVE_QUESTION) { // 提问/回复信息
                         if (PolyvChatMessage.EVENT_T_ANSWER.equals(chatMessage.getEvent())) {
-                            if (chatMessage.getS_userId().equals(chatManager.getUserId()))
+                            if (chatMessage.getS_userId().equals(chatManager.getUserId())) {
                                 viewPagerFragment.getQuestionFragment().receiveAnswer(chatMessage);
+                            }
                         }
                     } else if (chatMessage.getChatType() == PolyvChatMessage.CHATTYPE_RECEIVE_NOTICE) { // 其他的通知信息
                         switch (chatMessage.getEvent()) {
@@ -208,10 +210,11 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                             // 聊天室关闭时，不能接收或发送信息
                             case PolyvChatMessage.EVENT_CLOSEROOM:
                                 boolean isClose = chatMessage.getValue().isClosed();
-                                if (isClose)
+                                if (isClose) {
                                     chatMessage.setValues(new String[]{"聊天室关闭"});
-                                else
+                                } else {
                                     chatMessage.setValues(new String[]{"聊天室开启"});
+                                }
                                 break;
                             // 公告(这里实则是管理员的最后一次发言)
                             case PolyvChatMessage.EVENT_GONGGAO:
@@ -302,16 +305,19 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                                 String content1 = chatMessage.getContent();//文本内容，可能为空
                                 String image = chatMessage.getImage();//图片url，可能为空
                                 String showCusMessage = "自定义信息：";
-                                if (!TextUtils.isEmpty(content1))
+                                if (!TextUtils.isEmpty(content1)) {
                                     showCusMessage += content1;
-                                if (!TextUtils.isEmpty(image))
+                                }
+                                if (!TextUtils.isEmpty(image)) {
                                     showCusMessage += image;//这里只是显示image url文本，如果有image，请自行加载图片显示
+                                }
                                 chatMessage.setValues(new String[]{showCusMessage});
                                 break;
                         }
                     }
-                    if (syncAdd && chatMessage.getValues() != null)
+                    if (syncAdd && chatMessage.getValues() != null) {
                         polyvChatAdapter.add(chatMessage);
+                    }
                     break;
                 case DISCONNECT:
                     tv_status.setText("连接失败(" + ((PolyvChatManager.ConnectStatus) msg.obj).getDescribe() + ")");
@@ -344,8 +350,9 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                     if (lists.size() == messageCount) {
                         tv_loadmore.setText("加载更多...");
                         tv_loadmore.setTextColor(getResources().getColor(R.color.center_view_color_blue));
-                    } else
+                    } else {
                         tv_loadmore.setVisibility(View.GONE);
+                    }
                     if (count == 1 && lists.size() > 0) {
                         // 添加一条以上是历史消息的信息
                         String emptyMsg = "────────";
@@ -355,9 +362,9 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                         lists.add(historyMsg);
                     }
                     polyvChatAdapter.addAll(lists);
-                    if (count == 1 && lists.size() > 0 && messages.size() > 0)
+                    if (count == 1 && lists.size() > 0 && messages.size() > 0) {
                         lv_chat.smoothScrollToPosition(messages.size() - 1);
-                    else
+                    } else {
                         lv_chat.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -367,6 +374,7 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                                 }
                             }
                         }, 300);
+                    }
                     break;
                 case GETHISTORYFAIL:
                     count--;
@@ -431,8 +439,9 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (view == null)
+        if (view == null) {
             view = inflater.inflate(R.layout.polyv_fragment_chat, null);
+        }
         return view;
     }
 
@@ -449,10 +458,11 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                if (position == elists.size() - 1)
+                if (position == elists.size() - 1) {
                     deleteEmoText();
-                else
+                } else {
                     appendEmo(elists.get(position));
+                }
             }
         });
         return gv_emo;
@@ -526,8 +536,9 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
         if (regEnd == end - 1 && regEnd - regStart >= 2) {
             String regex = preMsg.substring(regStart);
             emoLength = regex.length();
-            if (PolyvFaceManager.getInstance().getFaceId(regex) != -1)
+            if (PolyvFaceManager.getInstance().getFaceId(regex) != -1) {
                 return true;
+            }
         }
         return false;
     }
@@ -549,10 +560,11 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
         span.setSpan(imageSpan, 0, span.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         int selectionStart = et_talk.getSelectionStart();
         int selectionEnd = et_talk.getSelectionEnd();
-        if (selectionStart != selectionEnd)
+        if (selectionStart != selectionEnd) {
             et_talk.getText().replace(selectionStart, selectionEnd, span);
-        else
+        } else {
             et_talk.getText().insert(selectionStart, span);
+        }
     }
 
     // 获取严禁词
@@ -576,8 +588,9 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                     }
                     String[] badwordArr = stringBuilder.toString().substring(1, stringBuilder.length() - 2).replaceAll("\"", "").split(",");
                     for (int i = 0; i < badwordArr.length; i++) {
-                        if (!badwordArr[i].trim().equals(""))
+                        if (!badwordArr[i].trim().equals("")) {
                             badwords.add(badwordArr[i]);
+                        }
                     }
                 } catch (IOException e) {
                 }
@@ -838,8 +851,9 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             closeKeybordAndEmo(et_talk, getContext());
+        }
     }
 
     @Override
@@ -887,8 +901,9 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                 resetEmoLayout(true);
                 break;
             case R.id.tv_loadmore:
-                if ("加载更多...".equals(tv_loadmore.getText()))
+                if ("加载更多...".equals(tv_loadmore.getText())) {
                     loadMoreChatMessage(channelId, chatUserId);
+                }
                 break;
             case R.id.tv_read:
                 tv_read.setVisibility(View.GONE);

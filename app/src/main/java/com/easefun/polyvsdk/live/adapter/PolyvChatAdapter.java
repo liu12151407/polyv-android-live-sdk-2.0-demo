@@ -164,8 +164,9 @@ public class PolyvChatAdapter extends BaseAdapter implements OnClickListener {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final PolyvChatMessage message = messages.get(position);
         final PolyvChatMessage.User user = message.getUser();
-        if (convertView == null)
+        if (convertView == null) {
             convertView = getChatView(position);
+        }
         final LinearLayout ll_parent = PolyvViewHolder.get(convertView, R.id.ll_parent);
         final ImageView iv_resend = PolyvViewHolder.get(convertView, R.id.iv_resend);
         final ImageView iv_avatar = PolyvViewHolder.get(convertView, R.id.iv_avatar);
@@ -359,8 +360,9 @@ public class PolyvChatAdapter extends BaseAdapter implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_parent:
-                if (listener != null)
+                if (listener != null) {
                     listener.onClick(v);
+                }
                 break;
         }
     }

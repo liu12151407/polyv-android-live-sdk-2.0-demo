@@ -111,7 +111,9 @@ public class PolyvPlayerPreviewView extends RelativeLayout {
 		@Override
 		protected void onPostExecute(PolyvVideoVO v) {
 			super.onPostExecute(v);
-			if (v == null) return;
+			if (v == null) {
+				return;
+			}
 			File dir = PolyvSDKClient.getInstance().getVideoDownloadExtraResourceDir(mVid);
 			String fileName = v.getFirstImage().substring(v.getFirstImage().lastIndexOf("/"));
 			File file = new File(dir, fileName);

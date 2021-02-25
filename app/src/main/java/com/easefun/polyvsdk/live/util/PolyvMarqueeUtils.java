@@ -44,8 +44,9 @@ public class PolyvMarqueeUtils extends NetUtilApiH1 {
             setMarqueeParams(marqueeVo, marqueeItem);
             marqueeItem.setText(nickname);
         } else if (PolyvLiveMarqueeVo.MARQUEETYPE_DIYURL.equals(marqueeVo.marqueeType))/*自定义url类型*/ {
-            if (!usediyurl)
+            if (!usediyurl) {
                 return;
+            }
             final String code = "";
             final long time = System.currentTimeMillis();
             // 可以参考自行请求及解析 http://dev.polyv.net/2017/liveproduct/l-functionintro/page-setup/bfqsz/diy_marquee/
@@ -99,7 +100,7 @@ public class PolyvMarqueeUtils extends NetUtilApiH1 {
                         }
                         return;
                     }
-                    if (activity != null)
+                    if (activity != null) {
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -108,16 +109,21 @@ public class PolyvMarqueeUtils extends NetUtilApiH1 {
                                 String tfilterColor = filterColor;
                                 String tfilter = filter;
                                 // 默认值
-                                if (tshow.equals(""))
+                                if (tshow.equals("")) {
                                     tshow = "on";
-                                if (!tshow.equals("on"))
+                                }
+                                if (!tshow.equals("on")) {
                                     return;
-                                if (tfontColor.equals(""))
+                                }
+                                if (tfontColor.equals("")) {
                                     tfontColor = "0x000000";
-                                if (tfilterColor.equals(""))
+                                }
+                                if (tfilterColor.equals("")) {
                                     tfilterColor = "0x000000";
-                                if (tfilter.equals(""))
+                                }
+                                if (tfilter.equals("")) {
                                     tfilter = "off";
+                                }
                                 int ifontSize = 30;
                                 int ispeed = 200;
                                 int isetting = 1;
@@ -200,14 +206,16 @@ public class PolyvMarqueeUtils extends NetUtilApiH1 {
                                     marqueeItem.setStrokeAlpha((int) (255 * ffilterAlpha));
                                     marqueeItem.setStrokeWidth(istrength);
                                     marqueeItem.setStrokeColor(Color.parseColor(tfilterColor.replace("0x", "#")));
-                                    if (iblurX > 0 || iblurY > 0)
+                                    if (iblurX > 0 || iblurY > 0) {
                                         marqueeItem.setBlurStroke(true);
+                                    }
                                 }
                                 marqueeItem.setInterval(iinterval * 1000);
                                 marqueeItem.setLifeTime(ilifeTime * 1000);
                                 marqueeItem.setTweenTime(itweenTime * 1000);
                             }
                         });
+                    }
                 }
             }, new int[]{1, 2, 3, 4, 5});
         }

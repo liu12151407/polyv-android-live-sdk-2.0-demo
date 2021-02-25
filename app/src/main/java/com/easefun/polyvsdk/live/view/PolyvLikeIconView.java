@@ -73,8 +73,9 @@ public class PolyvLikeIconView extends RelativeLayout {
             view.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (onButtonClickListener != null)
+                    if (onButtonClickListener != null) {
                         onButtonClickListener.onClick(view);
+                    }
                 }
             });
             RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -125,8 +126,9 @@ public class PolyvLikeIconView extends RelativeLayout {
     }
 
     public void addLoveIcon(int resId) {
-        if (height <= 0 || width <= 0)
+        if (height <= 0 || width <= 0) {
             return;
+        }
         ImageView view = new ImageView(getContext());
         view.setImageResource(resId);
         iconWidth = view.getDrawable().getIntrinsicWidth();
@@ -140,8 +142,9 @@ public class PolyvLikeIconView extends RelativeLayout {
     private Random randomColor = new Random();
 
     public void addLoveIcon() {
-        if (height <= 0 || width <= 0)
+        if (height <= 0 || width <= 0) {
             return;
+        }
         FloatingActionButton view = new FloatingActionButton(getContext());
         view.setImageResource(R.drawable.polyv_icon_like);
         view.setBackgroundTintList(ColorStateList.valueOf(color[randomColor.nextInt(color.length)]));

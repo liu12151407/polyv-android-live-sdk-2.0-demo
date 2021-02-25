@@ -83,8 +83,9 @@ public class PolyvQuestionFragment extends Fragment implements View.OnClickListe
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (getContext() == null)
+            if (getContext() == null) {
                 return;
+            }
             switch (msg.what) {
                 case RECEIVEANSWER:
                     PolyvChatMessage chatMessage = (PolyvChatMessage) msg.obj;
@@ -99,8 +100,9 @@ public class PolyvQuestionFragment extends Fragment implements View.OnClickListe
 
     // 接收老师对自己的回复时调用
     public void receiveAnswer(PolyvChatMessage chatMessage) {
-        if (!isInitialized)
+        if (!isInitialized) {
             return;
+        }
         Message message = handler.obtainMessage();
         message.obj = chatMessage;
         message.what = RECEIVEANSWER;
@@ -109,16 +111,18 @@ public class PolyvQuestionFragment extends Fragment implements View.OnClickListe
 
     // 聊天室登录成功时调用
     public void loginSuccess() {
-        if (!isInitialized || isAddTips)
+        if (!isInitialized || isAddTips) {
             return;
+        }
         isAddTips = true;
         polyvChatAdapter.add(new PolyvChatMessage("", "", "", 0, null, new PolyvChatMessage.User("", "讲师", "http://livestatic.polyv.net/assets/images/teacher.png", "", "", "", ""), new CharSequence[]{"同学，您好！请问有什么问题吗？"}));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (view == null)
+        if (view == null) {
             view = inflater.inflate(R.layout.polyv_fragment_question, null);
+        }
         return view;
     }
 
@@ -135,10 +139,11 @@ public class PolyvQuestionFragment extends Fragment implements View.OnClickListe
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                if (position == elists.size() - 1)
+                if (position == elists.size() - 1) {
                     deleteEmoText();
-                else
+                } else {
                     appendEmo(elists.get(position));
+                }
             }
         });
         return gv_emo;
@@ -183,8 +188,9 @@ public class PolyvQuestionFragment extends Fragment implements View.OnClickListe
         if (regEnd == end - 1 && regEnd - regStart >= 2) {
             String regex = preMsg.substring(regStart);
             emoLength = regex.length();
-            if (PolyvFaceManager.getInstance().getFaceId(regex) != -1)
+            if (PolyvFaceManager.getInstance().getFaceId(regex) != -1) {
                 return true;
+            }
         }
         return false;
     }
@@ -206,10 +212,11 @@ public class PolyvQuestionFragment extends Fragment implements View.OnClickListe
         span.setSpan(imageSpan, 0, span.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         int selectionStart = et_talk.getSelectionStart();
         int selectionEnd = et_talk.getSelectionEnd();
-        if (selectionStart != selectionEnd)
+        if (selectionStart != selectionEnd) {
             et_talk.getText().replace(selectionStart, selectionEnd, span);
-        else
+        } else {
             et_talk.getText().insert(selectionStart, span);
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -217,8 +224,9 @@ public class PolyvQuestionFragment extends Fragment implements View.OnClickListe
         chatManager = viewPagerFragment.getChatManager();
 
         polyvChatAdapter = new PolyvChatAdapter(getContext(), messages, lv_question);
-        if (chatManager.getConnectStatus() == PolyvChatManager.ConnectStatus.LOGINSUCCESS || chatManager.getConnectStatus() == PolyvChatManager.ConnectStatus.RECONNECTSUCCESS)
+        if (chatManager.getConnectStatus() == PolyvChatManager.ConnectStatus.LOGINSUCCESS || chatManager.getConnectStatus() == PolyvChatManager.ConnectStatus.RECONNECTSUCCESS) {
             loginSuccess();
+        }
         polyvChatAdapter.setResendType(false);
         polyvChatAdapter.setChatManager(chatManager);
         polyvChatAdapter.setViewPagerFragment(viewPagerFragment);
@@ -381,8 +389,9 @@ public class PolyvQuestionFragment extends Fragment implements View.OnClickListe
 
     //表情布局是否可见
     public boolean emoLayoutIsVisible() {
-        if (!isInitialized)
+        if (!isInitialized) {
             return false;
+        }
         return rl_bot.getVisibility() == View.VISIBLE && viewPagerFragment.getCurrentIndex() == 2;
     }
 
@@ -399,8 +408,9 @@ public class PolyvQuestionFragment extends Fragment implements View.OnClickListe
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             closeKeybordAndEmo(et_talk, getContext());
+        }
     }
 
     @Override
