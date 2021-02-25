@@ -1,8 +1,9 @@
 package com.easefun.polyvsdk.live;
 
 import android.os.AsyncTask;
-import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
+
+import androidx.multidex.MultiDexApplication;
 
 import com.easefun.polyvsdk.PolyvSDKClient;
 import com.easefun.polyvsdk.PolyvSDKUtil;
