@@ -6,8 +6,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.PointF;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -18,9 +17,12 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.Nullable;
+
 import com.easefun.polyvsdk.live.R;
 import com.easefun.polyvsdk.live.util.PolyvBezierEvaluator;
 import com.easefun.polyvsdk.live.util.PolyvScreenUtils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.lang.ref.WeakReference;
 import java.util.Random;
