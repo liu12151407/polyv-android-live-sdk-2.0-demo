@@ -50,4 +50,7 @@ dependencies {
     implementation 'com.easefun.polyv:polyvPlayerABI:1.9.5'//SDK核心包
     implementation 'com.easefun.polyv:polyvGif:2.2.1'//demo中课程讨论区显示的内容里用到的包。不涉及播放器功能。
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'//demo中图片使用
+    implementation("com.github.bumptech.glide:glide:4.11.0") {
+        exclude group: "com.android.support"
+    }
 }
